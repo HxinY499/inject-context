@@ -14,20 +14,19 @@ const tsPlugin = dir =>
     outDir: `./dist/${dir}`,
   });
 
-const external = ['react'];
-
 const createUMDConfig = env => {
   return {
     input: 'src/index.ts',
     output: {
-      file: `./dist/umd/injectContext-${env}.js`,
+      file: `./dist/umd/inject-context-${env}.js`,
       format: 'umd',
       name: 'injectContext',
+      exports: 'auto',
       globals: {
         react: 'React',
       },
     },
-    external,
+    external: ['react'],
     plugins: [
       tsPlugin('umd'),
       resolvePlugin(),
@@ -43,7 +42,7 @@ export default [
       dir: './dist/es',
       format: 'es',
     },
-    external,
+    external: ['react', 'fast-equals'],
     plugins: [tsPlugin('es'), resolvePlugin()],
   },
   createUMDConfig('development'),

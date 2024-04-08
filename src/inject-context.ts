@@ -2,6 +2,20 @@ import React from 'react';
 import shallowEqual from './shallowEqual';
 import get from './get';
 
+export interface Configuer {
+  get: (obj: any, path: string) => any;
+  shallowEqual: (
+    oldObj: any,
+    newObj: any,
+    deepKeys: Set<string> | string[]
+  ) => boolean;
+}
+const CONFIG: Configuer = { get: get, shallowEqual: shallowEqual };
+
+export function configure(newConfig: Partial<Configuer>) {
+  Object.assign(CONFIG, newConfig);
+}
+
 export interface SelectorItem {
   /** 选择出的数值在props里的属性名 */
   key: string;
@@ -41,7 +55,8 @@ export default function injectContext<ContextValue = {}, P = {}>(
 
     const injectContextMemoComponent = React.memo(
       props => React.createElement(Cpn as any, { ...props }),
-      (newProps, oldProps) => shallowEqual(newProps, oldProps, memoDeepKeys)
+      (newProps, oldProps) =>
+        CONFIG.shallowEqual(newProps, oldProps, memoDeepKeys)
     );
     injectContextMemoComponent.displayName = 'injectContextMemoComponent';
 
@@ -56,7 +71,7 @@ export default function injectContext<ContextValue = {}, P = {}>(
             if (typeof field === 'string') {
               selectState[field] = contextValue[field];
             } else {
-              selectState[field.key] = get(contextValue, field.path);
+              selectState[field.key] = CONFIG.get(contextValue, field.path);
               if (field.deep === true) {
                 memoDeepKeys.add(field.key);
               }

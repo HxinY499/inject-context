@@ -8,14 +8,13 @@
   "types": "es/index.d.ts",
   "scripts": {
     "test": "vitest",
-    "build": "shx rm -rf dist && tsc && rollup -c",
+    "build": "shx rm -rf dist && tsc && rollup -c && pnpm copy",
     "copy": "shx cp -r dist/types/src/* dist/es && shx rm -rf dist/types && shx cp package.json dist/",
     "demo": "cd ./demo && pnpm dev"
   },
   "author": "838195242@qq.com",
   "license": "ISC",
   "peerDependencies": {
-    "@types/react": ">=16.8",
     "react": ">=16.8"
   },
   "files": [
@@ -27,13 +26,15 @@
     "re-render"
   ],
   "sideEffects": false,
+  "dependencies": {
+    "fast-equals": "^5.0.1"
+  },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
     "@types/node": "^20.11.30",
     "@types/react": "^18.2.69",
-    "fast-equals": "^5.0.1",
     "react": "^18.2.0",
     "rollup": "^4.14.0",
     "shx": "^0.3.4",
