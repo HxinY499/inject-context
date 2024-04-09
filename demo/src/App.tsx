@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useContext, useRef, useState } from 'react';
-import injectContext from 'inject-context';
+import injectContext, { defineSelector as d } from 'inject-context';
 import useHighlight from './useHightlight';
 
 interface ContextValue {
@@ -32,10 +33,12 @@ function Child2() {
   );
 }
 
-const InjectContextChild = injectContext<{ count: ContextValue['count'] }>({
-  context: Context,
-  selector: ['count'],
-})(function (props) {
+const InjectContextChild = injectContext<{ count: ContextValue['count'] }>(
+  d({
+    context: Context,
+    selector: s => ({ count: s.count }),
+  })
+)(function (props) {
   const ref = useRef<HTMLDivElement>(null);
   useHighlight(ref);
   return (
@@ -48,10 +51,12 @@ const InjectContextChild = injectContext<{ count: ContextValue['count'] }>({
 
 const InjectContextChild2 = injectContext<{
   someString: ContextValue['someString'];
-}>({
-  context: Context,
-  selector: ['someString'],
-})(function (props) {
+}>(
+  d({
+    context: Context,
+    selector: s => ({ someString: s.someString }),
+  })
+)(function (props) {
   const ref = useRef<HTMLDivElement>(null);
   useHighlight(ref);
   return (

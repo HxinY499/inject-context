@@ -1,11 +1,6 @@
-import injectContext, { configure } from './inject-context';
+import injectContext, { defineSelector } from './inject-context';
 
-export type {
-  SelectorItem,
-  Selector,
-  ContextItem,
-  Configuer,
-} from './inject-context';
+export type { ContextItem } from './inject-context';
 
-export { configure };
+export { defineSelector };
 export default injectContext;
