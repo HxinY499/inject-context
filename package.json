@@ -1,6 +1,6 @@
 {
   "name": "inject-context",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Avoid unnecessary re-rendering of components caused by changes in context value",
   "main": "index.js",
   "type": "module",
