@@ -9,29 +9,45 @@ npm install inject-context
 ### 单个 context
 
 ```tsx
+import React from 'react';
 import injectContext from 'inject-context';
 
+const MyContext = React.createContext({ count: 0 });
+
+const App = props => {
+  // context的count被注入到props中
+  return <div>{props.count}</div>;
+};
+
 const Componnet = injectContext({
-  context: Context,
-  selector: (s) => ({....})
-})(你的组件)
+  context: MyContext,
+  selector: s => ({ count: s.count }),
+})(App);
 ```
 
 ### 多个 context
 
 ```tsx
+import React from 'react';
 import injectContext from 'inject-context';
+
+const MyContext1 = React.createContext({ count: 0 });
+const MyContext2 = React.createContext({ count: 0 });
+
+const App = props => {
+  return <div>{props.count1 + props.count2}</div>;
+};
 
 const Componnet = injectContext([
   {
-    context: Context1,
-    selector: (s) => ({....})
+    context: MyContext1,
+    selector: s => ({ count1: s.count }),
   },
   {
-    context: Context2,
-    selector: (s) => ({....})
-  }
-])(你的组件)
+    context: MyContext2,
+    selector: s => ({ count2: s.count }),
+  },
+])(App);
 ```
 
 ## 效果
