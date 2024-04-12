@@ -1,15 +1,23 @@
 {
   "name": "inject-context",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Avoid unnecessary re-rendering of components caused by changes in context value",
   "main": "index.js",
   "type": "module",
   "module": "es/index.js",
   "types": "es/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HxinY499/inject-context.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HxinY499/inject-context/issues"
+  },
+  "homepage": "https://github.com/HxinY499/inject-context.git",
   "scripts": {
     "test": "vitest",
     "build": "shx rm -rf dist && tsc && rollup -c && pnpm copy",
-    "copy": "shx cp -r dist/types/src/* dist/es && shx rm -rf dist/types && shx cp package.json dist/",
+    "copy": "shx cp -r dist/types/src/* dist/es && shx rm -rf dist/types && shx cp package.json dist/ && shx cp readme.md dist/",
     "demo": "cd ./demo && pnpm dev"
   },
   "author": "838195242@qq.com",

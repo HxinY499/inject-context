@@ -2,14 +2,26 @@
 
 ## 使用方式
 
+```shell
+npm install inject-context
+```
+
+### 单个 context
+
 ```tsx
-// 单个context
+import injectContext from 'inject-context';
+
 const Componnet = injectContext({
   context: Context,
   selector: (s) => ({....})
 })(你的组件)
+```
 
-// 多个context
+### 多个 context
+
+```tsx
+import injectContext from 'inject-context';
+
 const Componnet = injectContext([
   {
     context: Context1,
@@ -26,13 +38,24 @@ const Componnet = injectContext([
 
 组件重渲染，dom 会高亮，图中 `count` 会被改变，`someString` 不会被改变
 
-`npm run demo` 可以运行该 demo
+源代码中 `npm run demo` 可以运行该 demo
 
 ![20240410100632.gif](https://cdn.nlark.com/yuque/0/2024/gif/8406536/1712714803261-3211f283-75a3-48d1-89da-65d37dc10bba.gif#averageHue=%23f9f9fe&clientId=ud51f2106-5b8f-4&from=paste&height=326&id=u2b67f847&originHeight=652&originWidth=1592&originalType=binary&ratio=2&rotation=0&showTitle=false&size=228359&status=done&style=none&taskId=u8ed8d7e6-a0a5-4562-b475-8da1e105d69&title=&width=796)
 
 ## 支持深度比较
 
-`memo` 默认的比较函数只能对比第一层属性，**inject-context** 扩展了这个默认函数，支持选择性的深度比较，如果选择的某个 context 状态想要深度比较的话，可以通过如下方式：
+**inject-contex** 使用 `memo` 来达到避免不必要渲染的目的，`memo` 默认的比较函数只对比第一层属性，也就是对于 `memo` 来说，下面两个 props 是不同的：
+
+```tsx
+const prevProps = {
+  obj: { key: 1 },
+};
+const newProps = {
+  obj: { key: 1 },
+};
+```
+
+**inject-context** 扩展了 `memo` 的默认比较函数，支持选择性的深度比较，如果选择的某个 context 状态想要深度比较的话，可以通过如下方式：
 
 ```tsx
 const InjectContextChild2 = injectContext<{
@@ -66,7 +89,8 @@ count 实际被注入到 props 里了，但是并没有良好的类型提示，�
 
 ![image.png](https://cdn.nlark.com/yuque/0/2024/png/8406536/1712716481791-17e48c21-f6f7-474b-a0dd-e2f4080506d1.png#averageHue=%23212120&clientId=u3c866676-172b-4&from=paste&height=144&id=ude480040&originHeight=288&originWidth=1036&originalType=binary&ratio=2&rotation=0&showTitle=false&size=58706&status=done&style=none&taskId=u9d714e9e-a3ba-4cfe-a566-b88f37eb622&title=&width=518)
 
-可以通过 inject-context 提供的 defineSelector 来提供类型提示。
+可以通过 **inject-context** 提供的 `defineSelector` 来提供类型提示。
+用 `defineSelector` 包裹一下传入的 selector 属性即可。
 
 ![image.png](https://cdn.nlark.com/yuque/0/2024/png/8406536/1712716630227-b21c2a9d-fb95-4402-8364-ee600c94e318.png#averageHue=%2320201f&clientId=u3c866676-172b-4&from=paste&height=269&id=u6469d657&originHeight=538&originWidth=1750&originalType=binary&ratio=2&rotation=0&showTitle=false&size=102980&status=done&style=none&taskId=u5228cd15-047c-4a0f-9d3e-bd6a9961418&title=&width=875)
 
