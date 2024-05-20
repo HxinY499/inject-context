@@ -6,3 +6,5 @@ export { defineSelector };
 export default injectContext;
 
 const a = 1;
+
+const b = 1;
