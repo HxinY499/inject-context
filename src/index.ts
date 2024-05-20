@@ -4,3 +4,5 @@ export type { ContextItem } from './inject-context';
 
 export { defineSelector };
 export default injectContext;
+
+const a = 1;
